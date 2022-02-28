@@ -5,4 +5,4 @@
 Nuestro proyecto nace en la misma necesidad de suplir la alta demanda de globalización y aumento de rendimiento en las tareas de ofimática. 
 Nuestro equipo de ingenieros y técnicos han logrado un equilibrio perfecto entre calidad y rendimiento.”
 
-Wiki of the project: https://github.com/MJesusGit/isi-Texters.wiki.git
+Wiki of the project:https://github.com/MJesusGit/isi-Texters/wiki
