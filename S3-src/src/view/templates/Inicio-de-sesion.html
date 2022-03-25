@@ -7,11 +7,11 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="page_type" content="np-template-header-footer-from-plugin">
-  <title>Menú principal</title>
-  <link rel="stylesheet" href="nicepage.css" media="screen">
-  <link rel="stylesheet" href="Menú-principal.css" media="screen">
-  <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
-  <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+  <title>Inicio de sesión</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/nicepage.css')}}" media="screen">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/Inicio-de-sesion.css')}}" media="screen">
+  <script class="u-script" type="text/javascript" src="../jquery.js" defer=""></script>
+  <script class="u-script" type="text/javascript" src="../nicepage.js" defer=""></script>
   <meta name="generator" content="Nicepage 4.7.1, nicepage.com">
   <link id="u-theme-google-font" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
@@ -21,19 +21,18 @@
 		"@context": "http://schema.org",
 		"@type": "Organization",
 		"name": "",
-		"logo": "images/photo5834521671149665319.jpg"
+		"logo": "../images/photo5834521671149665319.jpg"
 }</script>
   <meta name="theme-color" content="#478ac9">
-  <meta property="og:title" content="Menú principal">
+  <meta property="og:title" content="Inicio de sesión">
   <meta property="og:type" content="website">
 </head>
 
-<body data-home-page="Menú-principal.html" data-home-page-title="Menú principal"
-  class="u-body u-stick-footer u-xl-mode">
+<body class="u-body u-xl-mode">
   <header class="u-clearfix u-header u-header" id="sec-2db9">
     <div class="u-clearfix u-sheet u-sheet-1">
       <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="897" data-image-height="358">
-        <img src="images/photo5834521671149665319.jpg" class="u-logo-image u-logo-image-1">
+        <img src="../images/photo5834521671149665319.jpg" class="u-logo-image u-logo-image-1">
       </a>
       <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
         <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
@@ -90,61 +89,53 @@
       </nav>
     </div>
   </header>
-  <section class="u-clearfix u-section-1" id="sec-cded">
+  <section class="u-align-center u-clearfix u-section-1" id="sec-52bb">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <div class="u-expanded-width u-list u-list-1">
-        <div class="u-repeater u-repeater-1">
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-1">
-              <img alt="" class="u-image u-image-default u-image-1" data-image-width="512" data-image-height="512"
-                src="images/convertir.png">
-              <h3 class="u-align-center u-text u-text-1">Convertir documentos</h3>
-              <p class="u-text u-text-2"> Convierte de PDF a Word o, por el contrario, de Word a PDF.<br>
-              </p>
-              <a href="Convertir.html" data-page-id="18119587"
-                class="u-align-center u-border-none u-btn u-button-style u-hover-palette-3-base u-btn-1"
-                target="_blank">Convertir</a>
-            </div>
+      <div class="u-opacity u-opacity-50 u-shape u-shape-svg u-text-palette-1-base u-shape-1">
+        <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 130" style="">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-15f0"></use>
+        </svg>
+        <svg class="u-svg-content" viewBox="0 0 160 130" x="0px" y="0px" id="svg-15f0"
+          style="enable-background:new 0 0 160 130;">
+          <path d="M141.6,99.5c0.3-0.5,0.6-0.9,0.9-1.4c11.8-19.2,26.1-51.9,10.8-73.1C137.2,2.7,104.7-1.6,80.9,0.5
+	C57.8,2.6,35.2,12.2,16.8,28.2C4,39.3-10.7,68.6,11.4,78.1c13.6,5.8,26.8,13,38.5,22.7c12,10,20.6,22.9,35.7,27.5
+	C108.6,135.2,128.6,119.9,141.6,99.5L141.6,99.5z"></path>
+        </svg>
+      </div>
+      <div class="u-form u-form-1">
+        <form action="#" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="custom"
+          name="form" style="padding: 10px;">
+
+
+          <div class="u-form-group u-form-name">
+            <label for="name-f258" class="u-label">Nombre</label>
+            <input type="text" placeholder="Introduzca su nombre" id="name-f258" name="name"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-2">
-              <img alt="" class="u-image u-image-contain u-image-default u-image-2" data-image-width="512"
-                data-image-height="512" src="images/escanear.png">
-              <h3 class="u-align-center u-text u-text-3">Escanear texto de imagenes</h3>
-              <p class="u-text u-text-4"> Escanea un PDF para localizar todas las imagenes y extraelas.&nbsp;</p>
-              <a href="Escanear.html" data-page-id="808529066"
-                class="u-align-center u-border-none u-btn u-button-style u-hover-palette-3-base u-btn-2"
-                target="_blank">Escanear</a>
-            </div>
+          <div class="u-form-email u-form-group">
+            <label for="email-f258" class="u-label">Contraseña</label>
+            <input type="email" placeholder="Introduzca una contraseña" id="email-f258" name="email"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white" required="">
           </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-3">
-              <img alt="" class="u-image u-image-contain u-image-default u-image-3" data-image-width="512"
-                data-image-height="512" src="images/anadir.png">
-              <h3 class="u-align-center u-text u-text-5">Unir varios documentos&nbsp;</h3>
-              <p class="u-text u-text-6"> Une todos los PDF's que desees en uno solo&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp;&nbsp;<br>
-                <br>
-              </p>
-              <a href="Unir.html" data-page-id="92542013"
-                class="u-align-center u-border-none u-btn u-button-style u-hover-palette-3-base u-btn-3"
-                target="_blank">Unir</a>
-            </div>
+          <div class="u-align-right u-form-group u-form-submit">
+            <a href="#"
+              class="u-border-none u-btn u-btn-submit u-button-style u-hover-palette-3-base u-btn-1">Aceptar</a>
+            <input type="submit" value="submit" class="u-form-control-hidden">
           </div>
-          <div class="u-container-style u-list-item u-repeater-item">
-            <div class="u-container-layout u-similar-container u-container-layout-4">
-              <img alt="" class="u-image u-image-contain u-image-default u-image-4" data-image-width="512"
-                data-image-height="512" src="images/resumen.png">
-              <h3 class="u-align-center u-text u-text-7">Resumir documentos</h3>
-              <p class="u-text u-text-8"> Resume un texto o word en el número de líneas que desees.<br>
-                <br>
-              </p>
-              <a href="Resumir.html" data-page-id="7797410"
-                class="u-align-center u-border-none u-btn u-button-style u-hover-palette-3-base u-btn-4"
-                target="_blank">Resumir</a>
-            </div>
-          </div>
-        </div>
+          <div class="u-form-send-message u-form-send-success"> Gracias! Tu mensaje ha sido enviado. </div>
+          <div class="u-form-send-error u-form-send-message"> No se puede enviar su mensaje. Por favor, corrija los
+            errores y vuelva a intentarlo. </div>
+          <input type="hidden" value="" name="recaptchaResponse">
+        </form>
+      </div>
+      <div class="u-opacity u-opacity-25 u-shape u-shape-svg u-text-palette-3-base u-shape-2">
+        <svg class="u-svg-link" preserveAspectRatio="none" viewBox="0 0 160 110" style="">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-31dd"></use>
+        </svg>
+        <svg class="u-svg-content" viewBox="0 0 160 110" x="0px" y="0px" id="svg-31dd">
+          <path d="M57.5,5.6c-17-10.9-35.9-4.1-45.4,4.5C-4.4,24.9-13.6,56.8,50.4,93.6c106.8,61.5,141.6-69.8,77.4-78.5
+	C84.5,9.3,88.9,25.8,57.5,5.6z"></path>
+        </svg>
       </div>
     </div>
   </section>
@@ -165,17 +156,7 @@
     <a class="u-link" href="" target="_blank">
       <span>Website Builder Software</span>
     </a>.
-  </section><span
-    style="height: 64px; width: 64px; margin-left: 0px; margin-right: auto; margin-top: 0px; background-image: none; right: 20px; bottom: 20px"
-    class="u-back-to-top u-icon u-icon-circle u-opacity u-opacity-85 u-palette-1-base u-spacing-15" data-href="#">
-    <svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 551.13 551.13">
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-1d98"></use>
-    </svg>
-    <svg class="u-svg-content" enable-background="new 0 0 551.13 551.13" viewBox="0 0 551.13 551.13"
-      xmlns="http://www.w3.org/2000/svg" id="svg-1d98">
-      <path d="m275.565 189.451 223.897 223.897h51.668l-275.565-275.565-275.565 275.565h51.668z"></path>
-    </svg>
-  </span>
+  </section>
 </body>
 
 </html>
