@@ -1,7 +1,5 @@
-from distutils import extension
 from os import getenv
 import os
-from re import T
 from unittest import result
 from dotenv import load_dotenv
 import convertapi
@@ -15,19 +13,18 @@ class ConvertApi:
     
     def extraer_imagenes(self, files): # supongo es un unico archivo
         if methods.comprobar_extension('.pdf',files):
-            result= convertapi.convert('extract-images', {'File': files}, from_format='pfd')
-            #pensar cómo descargará las images el usuario
+            return convertapi.convert('extract-images', {'File': files}, from_format='pfd')
         
     
     def unir_pdfs(self, files): #supongo que files es un array
         if len(files)>=2 & methods.comprobar_extensiones('.pdf',files):
-            result = convertapi.convert('merge',{'Files': files}, from_format='pfd')
-            #pensar cómo descargará el archivo el usuario
-    
+            return convertapi.convert('merge',{'Files': files}, from_format='pfd')
+
     def convertir_archivo(self, files, convert_to): #supongo es un unico archivo
-        if methods.comprobar_extension(files):
-            result = convertapi.convert(convert_to, {'File': files})   
-        #hacer que dependiendo del convert_to se compruebe una extensión u otra   
+        if convert_to.lower()=='pdf' & methods.comprobar_extension('.word',files):
+            return convertapi.convert(convert_to, {'File': files})   
+        elif methods.comprobar_extensiones('.pdf',files):
+            return convertapi.convert(convert_to, {'File': files})
 
 class methods:
     def comprobar_extensiones(extension_type, files):
