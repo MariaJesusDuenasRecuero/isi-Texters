@@ -17,7 +17,6 @@ class ConvertApi:
         return None
         
     
-<<<<<<< HEAD
     def unir_pdfs(self, files): #supongo que files es un array
         if len(files)>=2 & methods.comprobar_extensiones('.pdf',files):
             return convertapi.convert('merge',{'Files': files}, from_format='pfd')
@@ -44,11 +43,3 @@ class methods:
         if extension!=extension_type:
             return False
         return True
-=======
-    def unir_pdfs(self, files):
-        pass
-    
-    def convertir_archivo(self, files, convert_to):
-        pass
-    
->>>>>>> e29eee038f4d4a0dad23dab013e5a89dd1bff094
