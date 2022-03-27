@@ -10,8 +10,8 @@
   <title>Escanear</title>
   <link rel="stylesheet" href="{{url_for('static', filename='css/nicepage.css')}}" media="screen">
   <link rel="stylesheet" href="{{url_for('static', filename='css/Escanear.css')}}" media="screen">
-  <script class="u-script" type="text/javascript" src="../jquery.js" defer=""></script>
-  <script class="u-script" type="text/javascript" src="../nicepage.js" defer=""></script>
+  <script class="u-script" type="text/javascript" src="{{url_for('static', filename='jquery.js')}}" defer=""></script>
+  <script class="u-script" type="text/javascript" src="{{url_for('static', filename='nicepage.js')}}" defer=""></script>
   <meta name="generator" content="Nicepage 4.7.1, nicepage.com">
   <link id="u-theme-google-font" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
@@ -21,7 +21,7 @@
 		"@context": "http://schema.org",
 		"@type": "Organization",
 		"name": "",
-		"logo": "../images/photo5834521671149665319.jpg"
+		"logo": "href="{{url_for('static', filename='/images/photo5834521671149665319.jpg')}}""
 }</script>
   <meta name="theme-color" content="#478ac9">
   <meta property="og:title" content="Escanear">
@@ -31,8 +31,8 @@
 <body class="u-body u-xl-mode">
   <header class="u-clearfix u-header u-header" id="sec-2db9">
     <div class="u-clearfix u-sheet u-sheet-1">
-      <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="897" data-image-height="358">
-        <img src="../images/photo5834521671149665319.jpg" class="u-logo-image u-logo-image-1">
+      <a href="{{url_for('home')}}" class="u-image u-logo u-image-1" data-image-width="897" data-image-height="358">
+        <img src="{{url_for('static', filename='/images/photo5834521671149665319.jpg')}}" class="u-logo-image u-logo-image-1">
       </a>
       <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
         <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
@@ -55,15 +55,15 @@
           <ul class="u-nav u-unstyled u-nav-1">
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-3-base"
-                href="Menú-principal.html" style="padding: 10px 20px;">Menú principal</a>
+                href="{{url_for('home')}}" style="padding: 10px 20px;">Menú principal</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-3-base"
-                href="Sobre-nosotros.html" style="padding: 10px 20px;">Sobre nosotros</a>
+                href="{{url_for('about')}}" style="padding: 10px 20px;">Sobre nosotros</a>
             </li>
             <li class="u-nav-item"><a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-3-base"
-                href="Inicio-de-sesión.html" style="padding: 10px 20px;">Inicio de sesión</a>
+                href="{{url_for('signin')}}" style="padding: 10px 20px;">Inicio de sesión</a>
             </li>
           </ul>
         </div>
@@ -72,13 +72,13 @@
             <div class="u-inner-container-layout u-sidenav-overflow">
               <div class="u-menu-close"></div>
               <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2">
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Menú-principal.html">Menú
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{url_for('home')}}">Menú
                     principal</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Sobre-nosotros.html">Sobre
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{url_for('about')}}">Sobre
                     nosotros</a>
                 </li>
-                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Inicio-de-sesión.html">Inicio de
+                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{url_for('signin')}}">Inicio de
                     sesión</a>
                 </li>
               </ul>
