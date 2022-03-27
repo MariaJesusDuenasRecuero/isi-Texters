@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request
 import tkinter as tk
 from tkinter import filedialog
+import os
 
 app = Flask(__name__)
+
+app.config["UPLOADS"] = ""
 
 @app.route('/')
 def home():
@@ -11,8 +14,8 @@ def home():
 @app.route('/convertir', methods=['GET', 'POST'])
 def convertir():
     if request.method=='POST':
-        print(request.files["pdf"])
-        print(request.form['selection'])
+        if request.files:
+            file = request.files['pdf']
 
     return render_template("./Convertir.html")
 
