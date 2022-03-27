@@ -59,6 +59,10 @@
   padding: 20px 103px;
 }
 
+input[type="file"] {
+  display: none;
+}
+
 @media (max-width: 1199px) {
   .u-section-1 .u-sheet-1 {
     min-height: 332px;

@@ -41,14 +41,13 @@
         "@context": "http://schema.org",
         "@type": "Organization",
         "name": "",
-        "logo": "href="{{url_for('static', filename='/images/photo5834521671149665319.jpg')}}""
+        "logo": "images/photo5834521671149665319.jpg"
       }
     </script>
     <meta name="theme-color" content="#478ac9" />
     <meta property="og:title" content="Convertir" />
     <meta property="og:type" content="website" />
   </head>
-
   <body class="u-body u-xl-mode">
     <header class="u-clearfix u-header u-header" id="sec-2db9">
       <div class="u-clearfix u-sheet u-sheet-1">
@@ -185,42 +184,45 @@
                   class="u-container-layout u-valign-top u-container-layout-2"
                 >
                   <form
-                    action="/convertir"
+                    action="/convertir_a_word"
                     method="POST"
                     enctype="multipart/form-data"
                   >
-                  <div
-                  class="u-container-layout u-valign-top u-container-layout-2"
-                  >
-                    <select class="form-control" aria-label=".form-control" name="selection">
-                      <option selected>Seleccionar opción</option>
-                      <option value="1">PDF a Word</option>
-                      <option value="2">Word a PDF</option>
-                      <div
-                      class="u-container-layout u-valign-top u-container-layout-2"
-                      >
-                      <div class="form-group">
-                        <div class="custom-file">
-                          <input
-                          type="file"
-                          class="custom-file-input"
-                          name="pdf"
-                          id="pdf"
-                          />
-                        </div>
-                      </div>
-                      
-                      <button
-                      type="submit"
-                      class="u-align-center u-border-none u-btn u-button-style u-hover-palette-3-base u-btn-4"
-                      >
-                      Subir archivo
-                      </button>
-                  </select>
-                </div>
-              </div>
+                    <label for="pdf-to-word" class="custom-file-input u-align-center u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-3-base u-radius-16 u-btn-1 ">
+                        convertir de pdf a word
+                    </label>
+                      <input
+                        id="pdf-to-word"
+                        type="file"
+                        name="pdf"
+                        class="custom-file-input"
+                        onchange="this.form.submit()"
+                      />
                   </form>
                 </div>
+              </div>
+              <div
+                class="u-container-style u-layout-cell u-size-20 u-layout-cell-3"
+              >
+                <div
+                  class="u-container-layout u-valign-middle u-container-layout-3"
+                >
+                <form
+                action="/convertir_a_pdf"
+                method="POST"
+                enctype="multipart/form-data"
+              >
+                <label for="word-to-pdf" class="custom-file-input u-align-center u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-3-base u-radius-16 u-btn-1 ">
+                    convertir de word a pdf
+                </label>
+                  <input
+                    id="word-to-pdf"
+                    type="file"
+                    name="pdf"
+                    class="custom-file-input"
+                    onchange="this.form.submit()"
+                  />
+              </form>
                 </div>
               </div>
             </div>
