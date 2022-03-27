@@ -42,4 +42,8 @@ class methods:
         name, extension = os.path.splitext(files)
         if extension!=extension_type:
             return False
+<<<<<<< HEAD
         return True
+=======
+        return True
+>>>>>>> S3
