@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, redirect
 import tkinter as tk
-import os
+import os, sys
 from werkzeug.utils import secure_filename
+
+p = os.path.abspath('..')
+print(p)
+print(sys.path.append(p))
 
 from controller.request import *
 
@@ -35,7 +39,7 @@ def crear_peticion(type, filename, convert_to=None):
 
 @app.route('/')
 def home():
-    return render_template("./Menu-principal.html")
+    return render_template('./Menu-principal.html')
 
 @app.route('/convertir')
 def convertir():
