@@ -19,15 +19,12 @@ class ConvertApi:
     
     def unir_pdfs(self, files): #supongo que files es un array
         if len(files)>=2 & methods.comprobar_extensiones('.pdf',files):
-            return convertapi.convert('merge',{'Files': files}, from_format='pfd')
+            return convertapi.convert('merge',{'Files': files}, from_format='pdf')
         return None
 
     def convertir_archivo(self, files, convert_to): #supongo es un unico archivo
-        if convert_to.lower()=='pdf' & methods.comprobar_extension('.word',files):
-            return convertapi.convert(convert_to, {'File': files})   
-        elif methods.comprobar_extensiones('.pdf',files):
-            return convertapi.convert(convert_to, {'File': files})
-        return None
+        
+        return convertapi.convert(convert_to, {'File': files}, from_format='pdf')   
 
 class methods:
     def comprobar_extensiones(extension_type, files):

@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect
-import tkinter as tk
+from flask import Flask, render_template, request, redirect, send_from_directory
 import os, sys
 from werkzeug.utils import secure_filename
 
@@ -13,6 +12,7 @@ from controller.request import *
 app = Flask(__name__)
 
 app.config["UPLOADS"] = os.path.join(app.root_path, 'static/uploads')
+app.config["DOWNLOADS"] = os.path.join(app.root_path, 'static/downloads')
 
 def archivo_permitido(filename, isPDF=False):
     if not "." in filename:
@@ -30,10 +30,19 @@ def archivo_permitido(filename, isPDF=False):
         else:
             return False
 
-def crear_peticion(type, filename, convert_to=None):
+def hacer_peticion(type, filename, convert_to=None):
     peticion = Request(type, filename, convert_to)
-    peticion.realizar_peticion()
-    pass
+    respuesta = peticion.realizar_peticion()
+    
+    download_folder = app.config["DOWNLOADS"]
+    respuesta.save_files(download_folder)
+    
+    print("Archivo guardado en la carpeta: " + download_folder)
+
+
+# TODO def get_file(filename):
+#     return send_from_directory(app.config["DOWNLOADS"], filename)
+
 
 #TODO: controlar la respuesta de la peticion
 
@@ -48,17 +57,38 @@ def convertir():
 @app.route('/convertir_a_word', methods=['POST'])
 def convertir_a_word():
     if request.files:
-        file = request.files['pdf']
+        file = request.files['file']
         if not archivo_permitido(file.filename, isPDF=True):
             print("Este archivo no es un PDF")
             return redirect('/convertir')
             
         else:
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config["UPLOADS"], filename))
+            file_path = os.path.join(app.config["UPLOADS"], filename) 
+            file.save(file_path)
+            print(file_path)
             print("Archivo subido")
             
-    crear_peticion(type=requests.CONVERTIR, filename=filename, convert_to="doc")
+    hacer_peticion(type=requests.CONVERTIR, filename=file_path, convert_to="doc")
+    # get_file(filename)  --> llamar a otra ruta en la web para descargar el archivo
+    return redirect('/convertir')
+
+@app.route('/convertir_a_pdf', methods=['POST'])
+def convertir_a_pdf():
+    if request.files:
+        file = request.files['file']
+        if not archivo_permitido(file.filename):
+            print("Este archivo no es un documento WORD")
+            return redirect('/convertir')
+            
+        else:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config["UPLOADS"], filename) 
+            file.save(file_path)
+            print(file_path)
+            print("Archivo subido")
+            
+    #crear_peticion(type=requests.CONVERTIR, filename=filename, convert_to="pdf")
     return redirect('/convertir')
     
 
