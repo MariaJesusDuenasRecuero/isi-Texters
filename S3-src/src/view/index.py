@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect
 import tkinter as tk
-from tkinter import filedialog
 import os
 from werkzeug.utils import secure_filename
 
@@ -77,13 +76,7 @@ def about():
 
 @app.route('/signin')
 def signin():
-    return render_template("./Inicio-de-sesion.html")
-
-def pdf_to_word():
-    root = tk.Tk()
-    root.withdraw()
-    file_path = filedialog.askopenfile()
-    
+    return render_template("./Inicio-de-sesion.html")  
     
 if __name__ == '__main__':
     app.run(debug=True)
