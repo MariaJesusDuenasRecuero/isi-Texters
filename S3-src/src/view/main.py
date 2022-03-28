@@ -1,8 +1,9 @@
+from crypt import methods
 from flask import Flask, render_template, request, redirect, send_from_directory
 import os, sys
 from werkzeug.utils import secure_filename
 
-p = os.path.abspath('..')
+p = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 print(p)
 print(sys.path.append(p))
 
@@ -40,11 +41,19 @@ def hacer_peticion(type, filename, convert_to=None):
     print("Archivo guardado en la carpeta: " + download_folder)
 
 
-# TODO def get_file(filename):
+# def get_file(filename):
 #     return send_from_directory(app.config["DOWNLOADS"], filename)
 
+#
 
-#TODO: controlar la respuesta de la peticion
+def subir_archivo(file):
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config["UPLOADS"], filename) 
+    file.save(file_path)
+    print("Archivo subido")
+    
+    return file_path
+
 
 @app.route('/')
 def home():
@@ -63,14 +72,10 @@ def convertir_a_word():
             return redirect('/convertir')
             
         else:
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config["UPLOADS"], filename) 
-            file.save(file_path)
-            print(file_path)
-            print("Archivo subido")
+            file_path = subir_archivo(file)
             
     hacer_peticion(type=requests.CONVERTIR, filename=file_path, convert_to="doc")
-    # get_file(filename)  --> llamar a otra ruta en la web para descargar el archivo
+    # get_file(filename)
     return redirect('/convertir')
 
 @app.route('/convertir_a_pdf', methods=['POST'])
@@ -82,19 +87,27 @@ def convertir_a_pdf():
             return redirect('/convertir')
             
         else:
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config["UPLOADS"], filename) 
-            file.save(file_path)
-            print(file_path)
-            print("Archivo subido")
+            file_path = subir_archivo(file)
             
-    #crear_peticion(type=requests.CONVERTIR, filename=filename, convert_to="pdf")
+    hacer_peticion(type=requests.CONVERTIR, filename=file_path, convert_to="pdf")
     return redirect('/convertir')
     
 
-@app.route('/escanear')
+@app.route('/escanear', methods=['GET','POST'])
 def escanear():
-    return render_template("./Escanear.html")
+    if request.method == 'POST':
+        if request.files:
+            file = request.files['file']
+            if not archivo_permitido(file.filename, isPDF=True):
+                print("Este archivo no es un PDF")
+                return redirect('/escanear')
+            
+            else:
+                file_path = subir_archivo(file)
+                hacer_peticion(type=requests.ESCANEAR, filename=file_path)
+                return redirect('/escanear')
+    elif request.method == 'GET':
+        return render_template("./Escanear.html")
 
 @app.route('/resumir')
 def resumir():
@@ -103,6 +116,10 @@ def resumir():
 @app.route('/unir')
 def unir():
     return render_template("./Unir.html")
+
+@app.route('/ocr')
+def ocr():
+    return render_template("./Escanear.html")
 
 @app.route('/about')
 def about():

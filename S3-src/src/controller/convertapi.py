@@ -12,9 +12,7 @@ class ConvertApi:
         convertapi.api_secret=self.API_KEY
     
     def extraer_imagenes(self, files): # supongo es un unico archivo
-        if methods.comprobar_extension('.pdf',files):
-            return convertapi.convert('extract-images', {'File': files}, from_format='pfd')
-        return None
+        return convertapi.convert('extract-images', {'File': files})
         
     
     def unir_pdfs(self, files): #supongo que files es un array
@@ -23,8 +21,7 @@ class ConvertApi:
         return None
 
     def convertir_archivo(self, files, convert_to): #supongo es un unico archivo
-        
-        return convertapi.convert(convert_to, {'File': files}, from_format='pdf')   
+        return convertapi.convert(convert_to, {'File': files})   
 
 class methods:
     def comprobar_extensiones(extension_type, files):
