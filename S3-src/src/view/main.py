@@ -159,7 +159,7 @@ def unir():
 
 @app.route('/ocr')
 def ocr():
-    return render_template("./Escanear.html")
+    return render_template("./Ocr.html")
 
 @app.route('/about')
 def about():

@@ -20,6 +20,8 @@ class Request:
             return ConvertApi().unir_pdfs(self.files)
         elif self.request==requests.RESUMIR:
             return MeaningCloud().resumir(self.files)
+        elif self.request==requests.OCR:
+            pass
         else:
             return None
 
@@ -30,3 +32,4 @@ class requests(Enum):
     ESCANEAR = 2
     UNIR = 3
     RESUMIR = 4
+    OCR = 5
