@@ -174,12 +174,26 @@
             <p class="u-text u-text-2">
               Une todos los PDF's que desees en uno solo.
             </p>
-            <a
-              href="#"
-              class="u-border-none u-btn u-btn-round u-button-style u-color-scheme-summer-time u-color-style-multicolor-1 u-hover-palette-3-base u-palette-1-base u-radius-50 u-btn-1"
-              target="_blank"
-              >Unir documentos</a
+            <form
+            action="/unir"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <label
+              for="unir"
+              class="custom-file-input u-border-none u-btn u-btn-round u-button-style u-color-scheme-summer-time u-color-style-multicolor-1 u-hover-palette-3-base u-palette-1-base u-radius-50 u-btn-1"
             >
+              Unir documentos
+            </label>
+            <input
+              id="unir"
+              type="file"
+              name="file"
+              class="custom-file-input"
+              onchange="this.form.submit()"
+              multiple
+            />
+          </form>
           </div>
         </div>
       </div>

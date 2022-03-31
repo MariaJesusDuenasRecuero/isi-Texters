@@ -1,4 +1,5 @@
 from crypt import methods
+from importlib.metadata import files
 from flask import Flask, render_template, request, redirect, send_from_directory
 import os, sys
 from werkzeug.utils import secure_filename
@@ -31,8 +32,8 @@ def archivo_permitido(filename, isPDF=False):
         else:
             return False
 
-def hacer_peticion(type, filename, convert_to=None):
-    peticion = Request(type, filename, convert_to)
+def hacer_peticion(type, files, convert_to=None):
+    peticion = Request(type, files, convert_to)
     respuesta = peticion.realizar_peticion()
     
     download_folder = app.config["DOWNLOADS"]
@@ -74,7 +75,7 @@ def convertir_a_word():
         else:
             file_path = subir_archivo(file)
             
-    hacer_peticion(type=requests.CONVERTIR, filename=file_path, convert_to="doc")
+    hacer_peticion(type=requests.CONVERTIR, files=file_path, convert_to="doc")
     # get_file(filename)
     return redirect('/convertir')
 
@@ -82,6 +83,9 @@ def convertir_a_word():
 def convertir_a_pdf():
     if request.files:
         file = request.files['file']
+        if file.filename == "":
+            print("El archivo no tiene nombre")
+            return redirect('/convertir')
         if not archivo_permitido(file.filename):
             print("Este archivo no es un documento WORD")
             return redirect('/convertir')
@@ -89,7 +93,8 @@ def convertir_a_pdf():
         else:
             file_path = subir_archivo(file)
             
-    hacer_peticion(type=requests.CONVERTIR, filename=file_path, convert_to="pdf")
+    hacer_peticion(type=requests.CONVERTIR, files=file_path, convert_to="pdf")
+    render_template("./loader.html")
     return redirect('/convertir')
     
 
@@ -98,13 +103,17 @@ def escanear():
     if request.method == 'POST':
         if request.files:
             file = request.files['file']
+            if file.filename == '':
+                print("El archivo no tiene nombre,")
+                return redirect('/escanear')
+            
             if not archivo_permitido(file.filename, isPDF=True):
                 print("Este archivo no es un PDF")
                 return redirect('/escanear')
             
             else:
                 file_path = subir_archivo(file)
-                hacer_peticion(type=requests.ESCANEAR, filename=file_path)
+                hacer_peticion(type=requests.ESCANEAR, files=file_path)
                 return redirect('/escanear')
     elif request.method == 'GET':
         return render_template("./Escanear.html")
@@ -113,9 +122,31 @@ def escanear():
 def resumir():
     return render_template("./Resumir.html")
 
-@app.route('/unir')
+@app.route('/unir', methods=['GET','POST'])
 def unir():
-    return render_template("./Unir.html")
+    if request.method == 'POST':
+        if request.files:
+            files = request.files.getlist('file')
+            file_paths = []
+            for file in files:
+                if file.filename == '':
+                    print("El archivo no tiene nombre")
+                    return redirect('/unir')
+                
+                if not archivo_permitido(file.filename, isPDF=True):
+                    print(f"{file.filename} no es un archivo PDF")
+                    return redirect('/unir')
+                
+                else:
+                    file_path = subir_archivo(file)
+                    file_paths.append(file_path)
+            
+            hacer_peticion(type=requests.UNIR, files=file_paths)
+            
+            return redirect('/unir')
+    
+    elif request.method == 'GET':
+        return render_template("./Unir.html")
 
 @app.route('/ocr')
 def ocr():

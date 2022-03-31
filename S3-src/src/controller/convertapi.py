@@ -13,27 +13,10 @@ class ConvertApi:
     
     def extraer_imagenes(self, files): # supongo es un unico archivo
         return convertapi.convert('extract-images', {'File': files})
-        
     
     def unir_pdfs(self, files): #supongo que files es un array
-        if len(files)>=2 & methods.comprobar_extensiones('.pdf',files):
-            return convertapi.convert('merge',{'Files': files}, from_format='pdf')
-        return None
+        return convertapi.convert('merge',{'Files': files}, from_format='pdf')
 
     def convertir_archivo(self, files, convert_to): #supongo es un unico archivo
         return convertapi.convert(convert_to, {'File': files})   
 
-class methods:
-    def comprobar_extensiones(extension_type, files):
-
-        for file in files:
-            name, extension = os.path.splitext(file)
-            if extension!=extension_type:
-                return False
-        return True
-        
-    def comprobar_extension(extension_type, files):
-        name, extension = os.path.splitext(files)
-        if extension!=extension_type:
-            return False
-        return True
