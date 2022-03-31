@@ -11,12 +11,20 @@ class MeaningCloud:
         
     
     def resumir(self, files):
+        
+        f = open (files,'r')
+        mensaje = f.read()
+        f.close()
         payload={
 
             'key' : self.API_KEY,
-            'txt' : files,
+            'txt' : mensaje,
             'sentences' : '5'
             }
 
         response = requests.post(self.URL, data=payload)
-        return response.json()
+        response = str(response.json().get("summary"))
+        f = open(f'./view/static/downloads/Resumen.txt', 'w')
+        f.write(response)
+        f.close()
+        

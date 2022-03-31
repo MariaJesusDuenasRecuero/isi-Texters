@@ -36,10 +36,12 @@ def hacer_peticion(type, files, convert_to=None):
     peticion = Request(type, files, convert_to)
     respuesta = peticion.realizar_peticion()
     
-    download_folder = app.config["DOWNLOADS"]
-    respuesta.save_files(download_folder)
-    
-    print("Archivo guardado en la carpeta: " + download_folder)
+    if  type!= requests.RESUMIR:
+        download_folder = app.config["DOWNLOADS"]
+        respuesta.save_files(download_folder)
+        print("Archivo guardado en la carpeta: " + download_folder)
+
+   
 
 
 # def get_file(filename):
@@ -118,9 +120,16 @@ def escanear():
     elif request.method == 'GET':
         return render_template("./Escanear.html")
 
-@app.route('/resumir')
+@app.route('/resumir', methods=['GET', 'POST'])
 def resumir():
-    return render_template("./Resumir.html")
+    if request.method == 'POST':
+        file = request.files['file']
+        file_path = subir_archivo(file)
+        hacer_peticion(type=requests.RESUMIR, files=file_path)
+        return redirect("/resumir")
+    elif request.method == 'GET':
+        return render_template("./Resumir.html")
+
 
 @app.route('/unir', methods=['GET','POST'])
 def unir():
