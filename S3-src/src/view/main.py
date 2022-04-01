@@ -1,6 +1,5 @@
-from crypt import methods
-from importlib.metadata import files
-from flask import Flask, render_template, request, redirect, send_from_directory
+from importlib.resources import path
+from flask import Flask, current_app, render_template, request, redirect, send_from_directory
 import os, sys
 from werkzeug.utils import secure_filename
 
@@ -33,22 +32,21 @@ def archivo_permitido(filename, isPDF=False):
             return False
 
 def hacer_peticion(type, files, convert_to=None):
-    peticion = Request(type, files, convert_to)
-    respuesta = peticion.realizar_peticion()
+    peticion = Request(type, files, convert_to) 
     
-    if  type!= requests.RESUMIR:
-        download_folder = app.config["DOWNLOADS"]
-        respuesta.save_files(download_folder)
-        print("Archivo guardado en la carpeta: " + download_folder)
-
-   
-
-
-# def get_file(filename):
-#     return send_from_directory(app.config["DOWNLOADS"], filename)
-
-#
-
+    respuesta = peticion.realizar_peticion()
+    if peticion.request != requests.OCR:
+        if peticion.request == requests.RESUMIR:
+            summarized_text = respuesta["summary"]
+            filename = os.path.basename(files) + "_resumido.txt"
+            with open(os.path.join(app.config["DOWNLOADS"], filename), "w") as f:
+                f.write(summarized_text)
+        
+        else:
+            download_folder = app.config["DOWNLOADS"]
+            respuesta.save_files(download_folder)
+            print("Archivo guardado en la carpeta: " + download_folder)
+            
 def subir_archivo(file):
     filename = secure_filename(file.filename)
     file_path = os.path.join(app.config["UPLOADS"], filename) 
@@ -78,7 +76,6 @@ def convertir_a_word():
             file_path = subir_archivo(file)
             
     hacer_peticion(type=requests.CONVERTIR, files=file_path, convert_to="doc")
-    # get_file(filename)
     return redirect('/convertir')
 
 @app.route('/convertir_a_pdf', methods=['POST'])
@@ -96,7 +93,6 @@ def convertir_a_pdf():
             file_path = subir_archivo(file)
             
     hacer_peticion(type=requests.CONVERTIR, files=file_path, convert_to="pdf")
-    render_template("./loader.html")
     return redirect('/convertir')
     
 
@@ -123,10 +119,21 @@ def escanear():
 @app.route('/resumir', methods=['GET', 'POST'])
 def resumir():
     if request.method == 'POST':
-        file = request.files['file']
-        file_path = subir_archivo(file)
-        hacer_peticion(type=requests.RESUMIR, files=file_path)
-        return redirect("/resumir")
+        if request.files:
+            file = request.files['file']
+            if file.filename == '':
+                print("El archivo no tiene nombre,")
+                return redirect('/resumir')
+            
+            if not archivo_permitido(file.filename, isPDF=True):
+                print("Este archivo no es un PDF")
+                return redirect('/resumir')
+            
+            else:
+                file_path = subir_archivo(file)
+                hacer_peticion(type=requests.RESUMIR, files=file_path)
+                return redirect('/resumir')
+            
     elif request.method == 'GET':
         return render_template("./Resumir.html")
 
@@ -157,9 +164,25 @@ def unir():
     elif request.method == 'GET':
         return render_template("./Unir.html")
 
-@app.route('/ocr')
+@app.route('/ocr', methods=['GET','POST'])
 def ocr():
-    return render_template("./Ocr.html")
+    if request.method == 'POST':
+        if request.files:
+            file = request.files['file']
+            if file.filename == '':
+                print("El archivo no tiene nombre,")
+                return redirect('/ocr')
+            
+            if not archivo_permitido(file.filename, isPDF=True):
+                print("Este archivo no es un PDF")
+                return redirect('/ocr')
+            
+            else:
+                file_path = subir_archivo(file)
+                hacer_peticion(type=requests.OCR, files=file_path)
+                return redirect('/ocr')
+    elif request.method == 'GET':
+        return render_template("./Ocr.html")
 
 @app.route('/about')
 def about():

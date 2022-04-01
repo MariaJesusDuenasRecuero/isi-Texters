@@ -1,5 +1,6 @@
 from enum import Enum
-from lib2to3.pytree import convert
+import ocrmypdf
+import os
 
 from controller.convertapi import ConvertApi
 from controller.meaningcloud import MeaningCloud
@@ -10,6 +11,11 @@ class Request:
         self.request = request
         self.files = files
         self.convert_to = convert_to
+
+    def ocr(self, file):
+        result_file = os.path.basename(file) + "_OCR.pdf"
+        save_path = os.path.join(os.path.dirname(os.path.dirname(__file__)) + '/view/static/downloads/' + result_file)
+        ocrmypdf.ocr(file, save_path, deskew=True)
     
     def realizar_peticion(self):
         if self.request==requests.CONVERTIR:
@@ -21,9 +27,10 @@ class Request:
         elif self.request==requests.RESUMIR:
             return MeaningCloud().resumir(self.files)
         elif self.request==requests.OCR:
-            pass
+            self.ocr(self.files)
         else:
             return None
+
 
 
 class requests(Enum): 

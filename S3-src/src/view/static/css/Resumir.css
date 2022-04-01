@@ -37,6 +37,10 @@ input[type="file"] {
   display: none;
 }
 
+input[type='number']{
+  width: 80px;
+} 
+
 @media (max-width: 1199px) {
   .u-section-1 .u-btn-1 {
     height: 50px;
