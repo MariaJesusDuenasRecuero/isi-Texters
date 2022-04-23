@@ -1,1 +1,4 @@
-Hola caracola<>
+Una clase Counter es una subclase dict para contar objetos hashables.
+Es una colección donde los elementos se almacenan como llaves de diccionario y sus conteos se almacenan como
+valores de diccionario. Se permite que los conteos sean cualquier valor entero, incluidos los conteos de 
+cero o negativos. La clase Counter es similar a los bags o multiconjuntos en otros idiomas.
