@@ -1,17 +1,29 @@
-from model.userDAO import UserDAO
+import os, sys
 
+p = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(p)
+
+from model.userDAO import UserDAO
 
 class User:
     
-    def __init__(self, name, password, email):
-        self.name = name
-        self.password = password
+    def __init__(self, email, password, name=None, subscribed=False):
         self.email = email
-        self.subscribed = False
-        self.userDao= UserDAO
+        self.password = password
+        self.name = name
+        self.subscribed = subscribed
+        self.userDao = UserDAO()
         
     def read_user(self):
-        self.userDao.read_user()
+        try:
+            user_json = self.userDao.read_user(self)
+        except Exception as e:
+            raise e
+        else:
+            self.name = user_json["name"]
+            self.password = user_json["password"]
+            self.email = user_json["email"]
+            self.subscribed = user_json["subscribed"]
     
     def create_user(self):
         if self.userDao.read_user == None: #si no lo puede leer, es que no existe, se crea
@@ -19,5 +31,13 @@ class User:
     
     def update_user(self):
         self.userDao.update_user()
+        
+    def serialize(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "subscribed": self.subscribed,
+            "password": self.password
+        }
     
     

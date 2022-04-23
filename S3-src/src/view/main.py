@@ -1,19 +1,38 @@
-from importlib.resources import path
-from flask import Flask, current_app, render_template, request, redirect, send_from_directory
+from flask import Flask, current_app, flash, render_template, request, redirect, send_from_directory
+from flask import session
 import os, sys
 from werkzeug.utils import secure_filename
+import hashlib
+from dotenv import load_dotenv
 
 p = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-print(p)
-print(sys.path.append(p))
+sys.path.append(p)
 
 from controller.request import *
+from controller.user import User
 
-
+load_dotenv()
 app = Flask(__name__)
 
+app.secret_key = os.getenv("SECRET_FLASK_KEY")
 app.config["UPLOADS"] = os.path.join(app.root_path, 'static/uploads')
 app.config["DOWNLOADS"] = os.path.join(app.root_path, 'static/downloads')
+    
+    
+def authorized_user(user):
+    if user is None:
+        return False
+    else:
+        if user["subscribed"].lower() == "true":
+            return True
+        else:
+            return False
+
+def get_session_user():
+    if "user" in session:
+        return session["user"]
+    else:
+        return None
 
 def archivo_permitido(filename, isPDF=False):
     if not "." in filename:
@@ -62,7 +81,7 @@ def home():
 
 @app.route('/convertir')
 def convertir():
-    return render_template("./Convertir2.html")
+    return render_template("./Convertir.html")
 
 @app.route('/convertir_a_word', methods=['POST'])
 def convertir_a_word():
@@ -118,6 +137,11 @@ def escanear():
 
 @app.route('/resumir', methods=['GET', 'POST'])
 def resumir():
+    if not authorized_user(get_session_user()):
+        error_message = 'Esta funcionalidad es solo para usuarios suscritos'
+        flash(error_message)
+        return redirect('/')
+    
     if request.method == 'POST':
         if request.files:
             file = request.files['file']
@@ -164,8 +188,14 @@ def unir():
     elif request.method == 'GET':
         return render_template("./Unir.html")
 
+
 @app.route('/ocr', methods=['GET','POST'])
 def ocr():
+    if not authorized_user(get_session_user()):
+        error_message = 'Esta funcionalidad es solo para usuarios suscritos'
+        flash(error_message)
+        return redirect('/')
+    
     if request.method == 'POST':
         if request.files:
             file = request.files['file']
@@ -184,13 +214,37 @@ def ocr():
     elif request.method == 'GET':
         return render_template("./Ocr.html")
 
+
 @app.route('/about')
 def about():
     return render_template("./Sobre-nosotros.html")
 
-@app.route('/signin')
+
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
-    return render_template("./Inicio-de-sesion.html")  
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+        user = User(email, password_hash)
+        try:
+            user.read_user()
+            session["user"] = user.serialize()
+            return redirect('/')
+        except Exception as e:
+            error_message = e.__str__()
+            flash(error_message)
+            return render_template("./Inicio-de-sesion.html")
+    else:
+        return render_template("./Inicio-de-sesion.html")  
     
+#@app.routeS
+    
+@app.errorhandler(404)
+def not_found(error):
+    return "<h1>404</h1><p>Pagina no encontrada</p>", 404
+
+
 if __name__ == '__main__':
     app.run(debug=True)

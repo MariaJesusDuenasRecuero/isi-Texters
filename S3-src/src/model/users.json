@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "email": "juan@gmail.com",
+            "name": "Juan Caravantes",
+            "password": "f6ccb3e8d609012238c0b39e60b2c9632b3cdede91e035dad1de43469768f4cc",
+            "subscribed" :"true"
+        },
+        {
+            "email": "sergio@gmail.com",
+            "name": "Sergio Garrido",
+            "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+            "subscribed" :"false"
+        },
+        {
+            "email": "mj@gmail.com",
+            "name": "Maria Jesus",
+            "password": "160b3538a997a17dc70cfce41048b198735725f59f5096fae272696372106c0a",
+            "subscribed" :"true"
+        }
+    ]
+}
