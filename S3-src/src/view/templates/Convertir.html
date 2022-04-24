@@ -114,12 +114,24 @@
                 >
               </li>
               <li class="u-nav-item">
-                <a
-                  class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-3-base"
-                  href="{{url_for('signin')}}"
-                  style="padding: 10px 20px"
-                  >Inicio de sesión</a
-                >
+                {% if 'user' in session %}
+                  <p> {{session['user']['name']}} </p>
+                {% endif %}
+              </li>
+              <li class="u-nav-item">
+                {% if 'user' in session %}                    
+                  <a
+                    class="u-align-center u-border-none u-btn u-button-style u-hover-palette-3-base u-btn-2"
+                    href="{{url_for('logout')}}"
+                    >Cerrar sesión</a
+                  >
+                {% else %}
+                  <a
+                    class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-3-base"
+                    href="{{url_for('signin')}}"
+                    >Inicio de sesión</a
+                  >
+                {% endif %}
               </li>
             </ul>
           </div>

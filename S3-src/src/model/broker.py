@@ -20,8 +20,6 @@ class BrokerSingleton(object):
     def readUser(self, user):
         for u in self.users["users"]:
             if user.email == u["email"] and user.password == u["password"]:
-                print(user.email)
-                print(user.password)
                 return u
             
         raise Exception("Este usuario no existe") 

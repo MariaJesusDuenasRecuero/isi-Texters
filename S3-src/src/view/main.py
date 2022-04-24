@@ -1,4 +1,4 @@
-from flask import Flask, current_app, flash, render_template, request, redirect, send_from_directory
+from flask import Flask, current_app, flash, render_template, request, redirect, send_from_directory, url_for
 from flask import session
 import os, sys
 from werkzeug.utils import secure_filename
@@ -230,16 +230,29 @@ def signin():
         user = User(email, password_hash)
         try:
             user.read_user()
-            session["user"] = user.serialize()
-            return redirect('/')
+            session['user'] = user.serialize()
+            return redirect(url_for('home'))
         except Exception as e:
             error_message = e.__str__()
             flash(error_message)
             return render_template("./Inicio-de-sesion.html")
-    else:
+    elif request.method == 'GET':
         return render_template("./Inicio-de-sesion.html")  
+
+#@app.route('/signup', methods=['GET', 'POST'])
+#def signup():
+#    if request.method == 'POST':
+#        pass
+#    elif request.method == 'GET':
+#        pass
+#        return render_template('./signup.html')
     
-#@app.routeS
+@app.route('/logout')
+def logout():
+    if 'user' in session:
+        session.pop('user')
+    return redirect('/')
+
     
 @app.errorhandler(404)
 def not_found(error):
@@ -248,3 +261,4 @@ def not_found(error):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    

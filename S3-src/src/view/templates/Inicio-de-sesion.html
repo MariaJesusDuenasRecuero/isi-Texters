@@ -51,7 +51,7 @@
   </head>
 
   <body class="u-body u-xl-mode">
-    {% with messages = get_flashed_messages() %} 
+  {% with messages = get_flashed_messages() %} 
     {% if messages %}
         {% for message in messages %}
           <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert" >
