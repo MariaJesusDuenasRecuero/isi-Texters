@@ -50,8 +50,8 @@ def archivo_permitido(filename, isPDF=False):
         else:
             return False
 
-def hacer_peticion(type, files, convert_to=None):
-    peticion = Request(type, files, convert_to) 
+def hacer_peticion(type, files, convert_to=None, sentences=None):
+    peticion = Request(type, files, convert_to, sentences) 
     
     respuesta = peticion.realizar_peticion()
     if peticion.request != requests.OCR:
@@ -145,6 +145,7 @@ def resumir():
     if request.method == 'POST':
         if request.files:
             file = request.files['file']
+            sentences = request.form['sentences']
             if file.filename == '':
                 print("El archivo no tiene nombre,")
                 return redirect('/resumir')
@@ -155,7 +156,7 @@ def resumir():
             
             else:
                 file_path = subir_archivo(file)
-                hacer_peticion(type=requests.RESUMIR, files=file_path)
+                hacer_peticion(type=requests.RESUMIR, files=file_path, sentences=sentences)
                 return redirect('/resumir')
             
     elif request.method == 'GET':
@@ -260,5 +261,5 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
     
