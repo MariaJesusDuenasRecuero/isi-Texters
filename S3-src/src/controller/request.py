@@ -7,10 +7,11 @@ from controller.meaningcloud import MeaningCloud
 
 class Request:
     
-    def __init__(self, request, files, convert_to = None):
+    def __init__(self, request, files, convert_to = None, sentences = None):
         self.request = request
         self.files = files
         self.convert_to = convert_to
+        self.sentences = sentences
 
     def ocr(self, file):
         result_file = os.path.basename(file) + "_OCR.pdf"
@@ -25,7 +26,7 @@ class Request:
         elif self.request==requests.UNIR:
             return ConvertApi().unir_pdfs(self.files)
         elif self.request==requests.RESUMIR:
-            return MeaningCloud().resumir(self.files)
+            return MeaningCloud().resumir(self.files, self.sentences)
         elif self.request==requests.OCR:
             self.ocr(self.files)
         else:
