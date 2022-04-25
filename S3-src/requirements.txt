@@ -27,7 +27,6 @@ pandas==1.4.1
 pdfminer.six==20211012
 pikepdf==5.1.1
 Pillow==9.0.1
-pkg_resources==0.0.0
 pluggy==1.0.0
 pycparser==2.21
 pyparsing==3.0.7
